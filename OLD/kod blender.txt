@@ -1,0 +1,2 @@
+#sys.path.append("C:\\Users\\Nick\\AppData\\Local\\Programs\\Python\\Python35\\Lib\\site-packages")
+sys.path.append("C:\\Users\\Mati\\AppData\\Local\\Programs\\Python\\Python37-32\\Lib\\site-packages")

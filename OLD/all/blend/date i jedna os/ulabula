@@ -1,0 +1,21 @@
+
+import serial
+import time
+import bpy
+
+ser = serial.Serial('COM11','115200')
+time.sleep(3)
+ser.write(b'Get distance\n')
+start = float(ser.readline())
+
+cube = bpy.context.selected_objects[0]
+
+for x in range(1000):
+        ser.write(b'Get distance\n')
+        current_x = float(ser.readline())
+        print(current_x)
+        rad_x=current_x * 180/3.14
+        
+        bpy.ops.wm.redraw_timer(type='DRAW_WIN_SWAP', iterations=1)
+        
+ser.close()

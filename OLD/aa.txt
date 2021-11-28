@@ -1,0 +1,3 @@
+#this must point to a pyserial install dir for the OS (makes it work with Blender version currently running)
+#sys.path.append("C:\\Users\\Nick\\AppData\\Local\\Programs\\Python\\Python35\\Lib\\site-packages")
+sys.path.append("C:\\Users\\Mati\\AppData\\Local\\Programs\\Python\\Python37-32\\Lib\\site-packages")
