@@ -37,7 +37,7 @@ void setup(void)
 
   uint8_t ch;
 // Petla sprawdza czy w ogole sa jakies urzadzenia
-  for (ch=4; ch<6; ch++)  // multiple I2C devices
+  for (ch=5; ch<8; ch++)  // multiple I2C devices
   {
     tcaselect(ch);
 
@@ -75,7 +75,7 @@ void loop(void)
         
           if (CommandFromPC == "Get distance")
           {
-              for (ch=4; ch<6; ch++)  // multiple I2C devices
+              for (ch=5; ch<8; ch++)  // multiple I2C devices
                 {
                     tcaselect(ch);
                 
