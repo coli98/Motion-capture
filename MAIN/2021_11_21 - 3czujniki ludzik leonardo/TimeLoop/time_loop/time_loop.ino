@@ -7,7 +7,7 @@ void setup(){
 
 void loop(){
   //Pobierz liczbe milisekund od startu
-  aktualnyCzas = millis();
+  aktualnyCzas = micros();
   Serial.println(aktualnyCzas);
 
 

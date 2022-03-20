@@ -3,7 +3,7 @@
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
 
-
+unsigned long CurrentTime = 0;
 String CommandFromPC;
 
 #define BNO055_SAMPLERATE_DELAY_MS (100)
@@ -73,10 +73,11 @@ void loop(void)
           {
             CommandFromPC = Serial.readStringUntil('\n');
         
-          if (CommandFromPC == "Get distance")
+          if (CommandFromPC == "g")
           {
               for (ch=3; ch<8; ch++)  // multiple I2C devices
                 {
+                    CurrentTime = micros();                 
                     tcaselect(ch);
                 
                     /* Get a new sensor event */
@@ -102,11 +103,13 @@ void loop(void)
                   bno.getCalibration(&sys, &gyro, &accel, &mag);
                                                                
                     Serial.print(euler.x());
-                    Serial.print("");
+                    Serial.print(" ");
                     Serial.print(euler.y());
-                    Serial.print("");
+                    Serial.print(" ");
                     Serial.print(euler.z());
-                    Serial.print("");
+                    Serial.print(" ");
+                    Serial.print(CurrentTime);
+                    Serial.print(" ");
                     
                   }                                             
               Serial.print("\n");

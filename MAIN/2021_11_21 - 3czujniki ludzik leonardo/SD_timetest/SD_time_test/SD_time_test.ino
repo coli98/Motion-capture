@@ -2,8 +2,11 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <utility/imumaths.h>
+#include <SD.h>
+#include <SPI.h>
 
-
+File myFile;
+unsigned long CurrentTime = 0;
 String CommandFromPC;
 
 #define BNO055_SAMPLERATE_DELAY_MS (100)
@@ -49,7 +52,12 @@ void setup(void)
       while(1);
     }
   }
-
+  if (!SD.begin(10)) {
+      Serial.println("initialization failed!");
+      while (1);
+    }
+    myFile = SD.open("test.txt", FILE_WRITE);
+    
   delay(1000);
 // Petla wypisuje informacje o sensorach 
 //  for (ch=2; ch<4; ch++)  // multiple I2C devices
@@ -73,10 +81,11 @@ void loop(void)
           {
             CommandFromPC = Serial.readStringUntil('\n');
         
-          if (CommandFromPC == "Get distance")
+          if (CommandFromPC == "g")
           {
               for (ch=3; ch<8; ch++)  // multiple I2C devices
                 {
+                    CurrentTime = micros();                 
                     tcaselect(ch);
                 
                     /* Get a new sensor event */
@@ -101,15 +110,18 @@ void loop(void)
                   uint8_t sys, gyro, accel, mag = 0;
                   bno.getCalibration(&sys, &gyro, &accel, &mag);
                                                                
-                    Serial.print(euler.x());
-                    Serial.print("");
-                    Serial.print(euler.y());
-                    Serial.print("");
-                    Serial.print(euler.z());
-                    Serial.print("");
+                    myFile.print(euler.x());
+                    myFile.print(" ");
+                    myFile.print(euler.y());
+                    myFile.print(" ");
+                    myFile.print(euler.z());
+                    myFile.print(" ");
+                    myFile.print(CurrentTime);
+                    myFile.print(" ");
                     
                   }                                             
-              Serial.print("\n");
+              myFile.print("\n");
              }
+             myFile.close();
            }
 }
