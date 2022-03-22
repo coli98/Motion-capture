@@ -30,7 +30,7 @@ void displaySensorDetails(void)
 
 void setup(void)
 {
-  Serial.begin(115200);
+  Serial.begin(57600);
 //  Serial.println(""); Serial.println("Orientation Sensor Test"); Serial.println("");
 
   Wire.begin();

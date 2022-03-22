@@ -7,6 +7,7 @@
 
 File myFile;
 unsigned long CurrentTime = 0;
+unsigned long BlockTime = 0; 
 String CommandFromPC;
 
 #define BNO055_SAMPLERATE_DELAY_MS (100)
@@ -56,7 +57,7 @@ void setup(void)
       Serial.println("initialization failed!");
       while (1);
     }
-    myFile = SD.open("test.txt", FILE_WRITE);
+    
     
   delay(1000);
 // Petla wypisuje informacje o sensorach 
@@ -67,22 +68,20 @@ void setup(void)
 //    /* Display some basic information on this sensor */
 //    displaySensorDetails();
 //  }
-}
 
-void loop(void)
-{
   delay(100);
-  uint8_t ch;
+  //uint8_t ch;
+
+  myFile = SD.open("test.txt", FILE_WRITE);
 
 
-
-
-   if(Serial.available() > 0)
-          {
-            CommandFromPC = Serial.readStringUntil('\n');
+  // if(Serial.available() > 0)
+       //   {
+          //  CommandFromPC = Serial.readStringUntil('\n');
         
-          if (CommandFromPC == "g")
-          {
+         // if (CommandFromPC == "g")
+          //{
+          for(int i=0; i<201; i++){
               for (ch=3; ch<8; ch++)  // multiple I2C devices
                 {
                     CurrentTime = micros();                 
@@ -118,10 +117,21 @@ void loop(void)
                     myFile.print(" ");
                     myFile.print(CurrentTime);
                     myFile.print(" ");
+                    Serial.print("Wysyłam dana o num:"); Serial.print(i);Serial.print("\n");
                     
-                  }                                             
+                  }  
+              BlockTime = micros();
+              myFile.print(BlockTime);                                               
               myFile.print("\n");
-             }
-             myFile.close();
-           }
+             //}
+              
+          }
+           //}
+    myFile.close();
+
+}
+
+void loop(void)
+{
+
 }
