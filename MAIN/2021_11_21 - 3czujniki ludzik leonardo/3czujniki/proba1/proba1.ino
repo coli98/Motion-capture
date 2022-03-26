@@ -73,7 +73,7 @@ void loop(void)
           {
             CommandFromPC = Serial.readStringUntil('\n');
         
-          if (CommandFromPC == "Get distance")
+          if (CommandFromPC == "g")
           {
               for (ch=3; ch<8; ch++)  // multiple I2C devices
                 {
@@ -102,11 +102,11 @@ void loop(void)
                   bno.getCalibration(&sys, &gyro, &accel, &mag);
                                                                
                     Serial.print(euler.x());
-                    Serial.print("");
+                    Serial.print(" ");
                     Serial.print(euler.y());
-                    Serial.print("");
+                    Serial.print(" ");
                     Serial.print(euler.z());
-                    Serial.print("");
+                    Serial.print(" ");
                     
                   }                                             
               Serial.print("\n");

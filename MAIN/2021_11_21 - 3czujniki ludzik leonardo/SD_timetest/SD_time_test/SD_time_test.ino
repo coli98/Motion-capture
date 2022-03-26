@@ -9,7 +9,7 @@ File myFile;
 unsigned long CurrentTime = 0;
 unsigned long BlockTime = 0; 
 String CommandFromPC;
-
+int clockFrequency = 200000;
 #define BNO055_SAMPLERATE_DELAY_MS (100)
 #define TCAADDR 0x70
 
@@ -34,10 +34,11 @@ void displaySensorDetails(void)
 
 void setup(void)
 {
-  Serial.begin(115200);
+  Serial.begin(2000000);
 //  Serial.println(""); Serial.println("Orientation Sensor Test"); Serial.println("");
 
   Wire.begin();
+  Wire.setClock(clockFrequency);
 
   uint8_t ch;
 // Petla sprawdza czy w ogole sa jakies urzadzenia
@@ -59,7 +60,7 @@ void setup(void)
     }
     
     
-  delay(1000);
+//  delay(1000);
 // Petla wypisuje informacje o sensorach 
 //  for (ch=2; ch<4; ch++)  // multiple I2C devices
 //  {
@@ -72,7 +73,7 @@ void setup(void)
   delay(100);
   //uint8_t ch;
 
-  myFile = SD.open("test.txt", FILE_WRITE);
+  myFile = SD.open("CLOCK4.TXT", FILE_WRITE);
 
 
   // if(Serial.available() > 0)
@@ -81,7 +82,7 @@ void setup(void)
         
          // if (CommandFromPC == "g")
           //{
-          for(int i=0; i<201; i++){
+          for(int i=0; i<200; i++){
               for (ch=3; ch<8; ch++)  // multiple I2C devices
                 {
                     CurrentTime = micros();                 
@@ -117,7 +118,7 @@ void setup(void)
                     myFile.print(" ");
                     myFile.print(CurrentTime);
                     myFile.print(" ");
-                    Serial.print("Wysyłam dana o num:"); Serial.print(i);Serial.print("\n");
+                 //   Serial.print("Wysyłam dana o num:"); Serial.print(i);Serial.print("\n");
                     
                   }  
               BlockTime = micros();
@@ -128,6 +129,7 @@ void setup(void)
           }
            //}
     myFile.close();
+    Serial.print("End of Transmision");
 
 }
 

@@ -11,8 +11,9 @@ File myFile;
 unsigned long CurrentTime = 0;
 unsigned long BlockTime = 0; 
 String CommandFromPC;
+String fileName = "Euler0.txt";
 
-#define BNO055_SAMPLERATE_DELAY_MS (100)
+#define BNO055_SAMPLERATE_DELAY_MS (0)
 #define TCAADDR 0x70
 
 /* select I2C channel using TCA9548A multiplexer */
@@ -36,6 +37,7 @@ void displaySensorDetails(void)
 
 void setup(void)
 {
+  Wire.setClock(400000);
   Serial.begin(115200);
 //  Serial.println(""); Serial.println("Orientation Sensor Test"); Serial.println("");
 
@@ -74,7 +76,7 @@ void setup(void)
   delay(100);
   //uint8_t ch;
 
-  myFile = SD.open("test.txt", FILE_WRITE);
+  myFile = SD.open(fileName, FILE_WRITE);
 
           for(int i=0; i<200; i++){
               for (ch=3; ch<8; ch++)  // multiple I2C devices
@@ -85,7 +87,7 @@ void setup(void)
                     /* Get a new sensor event */
 //                    sensors_event_t event;
 //                    bno.getEvent(&event);
-                    
+                   //imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
                     imu::Vector<3> euler = bno.getVector(Adafruit_BNO055::VECTOR_EULER);
                    
                   //bno.getCalibration(&sys, &gyro, &accel, &mag);
